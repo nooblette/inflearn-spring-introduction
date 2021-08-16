@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<p th:text="'hello ' + ${name}">hello! empty</p>
+<!--
+${name}은 model에서 key값이 name인 값을 꺼내서 치환
+hello! empty가 'hello ' + ${name} 에 있는 값으로 치환됨
+-->
+</body>
+</html>
