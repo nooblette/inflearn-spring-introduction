@@ -17,7 +17,8 @@ class MemberServiceTest {
     @BeforeEach
     public void beforeEach(){ // 각 method 에 대한 Test 를 실행하기 전에 아래 두 줄을 실행
 
-        // MemberService와 MemberServiceTest가 같은 MemoryMmeberRepository를 사용하기 위함
+        // MemberService 와 MemberServiceTest 가 동일한 인스턴스(MemoryMemberRepository)를 사용하기 위함
+        // 쉽게 말해, 서로 다른 인스턴스를 사용하면 다른 DB를 사용하게 되므로 문제가 발생
         memberRepository = new MemoryMemberRepository();
         memberService = new MemberService(memberRepository);
     }
@@ -63,21 +64,20 @@ class MemberServiceTest {
         //when
         memberService.join(member1);
 
-
         /**
          * " () -> memberService.join(member2) " 로직을 실행할 건데
-         * " IllegalStateException " 이 예외가 터지면 성공
+         * " IllegalStateException " <- 이 예외가 터지면 테스트 성공
          */
         IllegalStateException e = assertThrows(IllegalStateException.class, () -> memberService.join(member2));
 
-        assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
+        assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다."); // 에러 메시지 검증
 
 //        try {
 //            memberService.join(member2);
 //            fail(); // 의도적으로 예외를 발생시키게 했는데 그걸 못 잡는 경우 대비
 //
 //        } catch(IllegalStateException e){
-//            assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.123123");
+//            assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
 //        }
 
         //then
