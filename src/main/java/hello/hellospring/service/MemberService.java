@@ -20,12 +20,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-@Service
 public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    @Autowired // Autowired 가 있으면,
+    // Autowired 가 있으면,
     // memberRepository 를 내가 생성하는게 아니라
     // 스프링이 스프링 컨테이너에 있는 MemberRepository 를 넣어줌 (Dependency Injection (DI))
     public MemberService(MemberRepository memberRepository) {

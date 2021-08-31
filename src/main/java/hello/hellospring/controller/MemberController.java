@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 @Controller
+// controller 는 스프링이 관리해야하기 때문에
+// 스프링빈을 두는게 아니라 컴포넌트 스캔으로 스프링 컨테이너에 등록됨
 /**
  * Controller Annotation 을 붙이면
  * 스프링 컨테이너에 이 MemberController 객체를 생성해서 넣어두고 스프링이 관리함, 관련된 기능들이 동작
@@ -27,10 +29,10 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @Autowired // 스프링이 스프링 컨테이너에 있는 memberService를 가져와서 연결시켜줌
+    @Autowired // 스프링이 스프링 컨테이너에 있는 memberService 를 가져와서 연결시켜줌
     /** 연결 시켜줄땐 생성자에서 Autowired 어노테이션 사용 **/
     public MemberController(MemberService memberService) { // 생성자로 memvberService 를 연결
-        this.memberService = memberService;
+        this.memberService = memberService; // 생성자 주입(그 외에 setter 주입, 필드주입이 있음 / 생성자 주입을 가장 권장)
         // 멤버컨트롤러가 생성될때 스프링 빈에 등록되어있는 멤버 서비스 객체를 가져와서 넣어줌 -> DI(의존성 주입)
     }
 }
