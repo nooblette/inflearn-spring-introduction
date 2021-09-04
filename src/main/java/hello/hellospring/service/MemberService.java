@@ -16,10 +16,15 @@ import hello.hellospring.repository.MemberRepository;
 import hello.hellospring.repository.MemoryMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
+// jpa 를 사용하려면 data 를 저장하거나 변경할때 항상 transactional 이 있어야함
+
+// DB에 쿼리를 던진 후에 commit 을 해야 반영이 됨.
+@Transactional
 public class MemberService {
 
     private final MemberRepository memberRepository;

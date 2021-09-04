@@ -5,17 +5,19 @@ import hello.hellospring.repository.MemberRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest // 스프링 컨테이너와 테스트를 함께 실행
-@Transactional
+
 // DB에 쿼리를 던진 후에 commit 을 해야 반영이 됨.
 // 테스트 케이스에선 Transactional Annotation 을 통해,
 // 테스트 케이스의 트랜잭션을 실행하고 디비에 쿼리를 던지고 테스트가 끝나면 디비를 롤백함 (테스트시 디비에 넣은 데이터를 다 날려버림)
 // 트랜잭션을 롤백함으로써(디비에 데이터가 반영x) 동일한 테스트를 반복해서 실행할 수 있다.
+@Transactional
 
 class MemberServiceIntegrationTest {
 /** 보통 테스트 전용 DB를 별도로 구축해둠(혹은 local DB를 테스트용도로 사용) **/
@@ -25,6 +27,7 @@ class MemberServiceIntegrationTest {
     @Autowired  MemberRepository memberRepository;
 
     @Test
+    //@Commit // db에 반영 시키기 위함
     void 회원가입() { // 테스트 관련 코드들은 빌드될 때 실제 코드에 포함x 의사소통 하기 쉽게 그냥 한글로 작성해도됨
 
         /**
@@ -37,7 +40,7 @@ class MemberServiceIntegrationTest {
 
         //given
         Member member = new Member();
-        member.setName("spring");
+        member.setName("spring100");
 
         //when
         Long saveId = memberService.join(member);

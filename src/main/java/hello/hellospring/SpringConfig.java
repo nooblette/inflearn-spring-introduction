@@ -1,25 +1,35 @@
 package hello.hellospring;
 
-import hello.hellospring.repository.JdbcMemberRepository;
-import hello.hellospring.repository.JdbcTemplateMemberRepository;
-import hello.hellospring.repository.MemberRepository;
-import hello.hellospring.repository.MemoryMemberRepository;
+import hello.hellospring.repository.*;
 import hello.hellospring.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.sql.DataSource;
 
 @Configuration  //1. 스프링이 이 configuration 을 읽고
 public class SpringConfig {
 
-    private DataSource dataSource; // DB와 연결할 수 있는 정보가 있는 데이터소스
+    /*
+    private DataSource dataSource; // DB와 연결할 수 있는 정보가 있는 데이터소스 (JDBC)
 
     @Autowired
     public SpringConfig(DataSource dataSource){
         this.dataSource = dataSource;
     }
+     */
+
+    @PersistenceContext
+    private EntityManager em;
+
+    @Autowired
+    public SpringConfig(EntityManager em){ // DB와 연결할 수 있는 정보가 있는 entity manager (Jpa)
+        this.em = em;
+    }
+
     @Bean  // 2. spring bean 에 등록해야하는것을 인식
     public MemberService memberService(){  // 3. 이 로직을 호출해서 Spring bean 에 등록
         return new MemberService(memberRepository());  //  4. memberService 가 spring bean 에 등록됨
@@ -37,6 +47,9 @@ public class SpringConfig {
 
     @Bean
     public MemberRepository memberRepository(){
-        return new JdbcTemplateMemberRepository(dataSource);
+//        return new MemoryMemberRepository();
+//        return new JdbcMemberRepository(datasource);
+//        return new JdbcTemplateMemberRepository(datasource);
+        return new JpaMemberRepository(em);
     }
 }
