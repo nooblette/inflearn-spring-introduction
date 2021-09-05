@@ -22,6 +22,7 @@ public class SpringConfig {
     }
      */
 
+    /*
     @PersistenceContext
     private EntityManager em;
 
@@ -29,10 +30,19 @@ public class SpringConfig {
     public SpringConfig(EntityManager em){ // DB와 연결할 수 있는 정보가 있는 entity manager (Jpa)
         this.em = em;
     }
+     */
+
+    @Autowired
+    private final MemberRepository memberRepository;
+
+    public SpringConfig(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository; // SpringDataJpa 1. SpringDataJpa 가 만든 구현체가 스프링 빈에 등록되어있고
+   }
 
     @Bean  // 2. spring bean 에 등록해야하는것을 인식
     public MemberService memberService(){  // 3. 이 로직을 호출해서 Spring bean 에 등록
-        return new MemberService(memberRepository());  //  4. memberService 가 spring bean 에 등록됨
+        return new MemberService(memberRepository);  //  4. memberService 가 spring bean 에 등록됨
+        // SpringDataJpa 2. SpringDataJpa 가 알아서 만든 구현체를 그냥 injection 받아 등록하면됨
     }
 
 
@@ -45,11 +55,11 @@ public class SpringConfig {
 //    }
 
 
-    @Bean
-    public MemberRepository memberRepository(){
+//    @Bean
+//    public MemberRepository memberRepository(){
 //        return new MemoryMemberRepository();
 //        return new JdbcMemberRepository(datasource);
 //        return new JdbcTemplateMemberRepository(datasource);
-        return new JpaMemberRepository(em);
-    }
+//        return new JpaMemberRepository(em);
+//    }
 }
