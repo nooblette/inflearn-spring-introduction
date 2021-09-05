@@ -1,5 +1,6 @@
 package hello.hellospring;
 
+import hello.hellospring.aop.TimeTraceAop;
 import hello.hellospring.repository.*;
 import hello.hellospring.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,10 @@ public class SpringConfig {
         // SpringDataJpa 2. SpringDataJpa 가 알아서 만든 구현체를 그냥 injection 받아 등록하면됨
     }
 
+//    @Bean // AOP 에 ComponentScan 어노테이션을 달아도 되는데, 이렇게 스프링 빈에 등록해서 사용하는걸 선호(AOP 를 걸었다는걸 인지할 수 있도록)
+//    public TimeTraceAop timeTraceAop(){
+//        return new TimeTraceAop();
+//    } // 여기서는 그냥 Component scan 을 사용
 
 //    @Bean
 //    public MemberRepository memberRepository(){
